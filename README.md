@@ -2,6 +2,12 @@
 
 *A glassmorphic companion that responds to your face and your moves.*
 
+## Screenshots
+
+| Motion Boo | Camera Boo |
+| --- | --- |
+| ![Motion Boo](art/motion.png) | ![Camera Boo](art/camera.png) |
+
 ## Overview
 
 Boo is a Flutter-powered showcase of playful ambient interactions. It merges motion sensors, real-time camera analysis, and a liquid-glass UI to build a single immersive screen where Boo (our resident blob) reacts to the world around you.
@@ -15,12 +21,6 @@ This repository contains everything required to explore, run, and ship Boo on An
 - **Real-Time Face Detection**: Powered by Google ML Kit with NV21 conversion for Android parity.
 - **iOS Stability**: Defensive camera lifecycle handling prevents preview freezes when backgrounding.
 - **Automated Releases**: Every push builds split-per-ABI APKs and attaches them to a fresh GitHub release.
-
-## Screenshots
-
-| Motion Boo | Camera Boo |
-| --- | --- |
-| ![Motion Boo](art/motion.png) | ![Camera Boo](art/camera.png) |
 
 ## Quick Start
 
@@ -75,6 +75,10 @@ We welcome experiments, bug fixes, and whimsical ideas. To contribute:
 3. Make your changes and add tests where relevant.
 4. Run `flutter analyze` and `flutter test`.
 5. Open a pull request describing the behavior you tweaked or the joy you added.
+
+## Acknowledgements
+
+[boo](https://github.com/larvalabs/boo)
 
 ## License
 
