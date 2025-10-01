@@ -1,6 +1,6 @@
 # Boo 👻
 
-*A glassmorphic companion that responds to your face and your moves.*
+*A companion that responds to your face and your moves.*
 
 ## Screenshots
 
