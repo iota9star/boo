@@ -12,7 +12,8 @@ class BooScene extends StatefulWidget {
   State<BooScene> createState() => _BooSceneState();
 }
 
-class _BooSceneState extends State<BooScene> with SingleTickerProviderStateMixin {
+class _BooSceneState extends State<BooScene>
+    with SingleTickerProviderStateMixin {
   late final Ticker _ticker;
   int _timeMillis = DateTime.now().millisecondsSinceEpoch;
 
@@ -41,10 +42,7 @@ class _BooSceneState extends State<BooScene> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: CustomPaint(
-        painter: _BooPainter(
-          world: widget.world,
-          timeMillis: _timeMillis,
-        ),
+        painter: _BooPainter(world: widget.world, timeMillis: _timeMillis),
       ),
     );
   }

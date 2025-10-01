@@ -11,8 +11,8 @@ import 'package:boo/main.dart';
 
 void main() {
   testWidgets('Boo home renders both experiences', (WidgetTester tester) async {
-  await tester.pumpWidget(const BooApp());
-  await tester.pump();
+    await tester.pumpWidget(const BooApp());
+    await tester.pump();
 
     expect(find.text('Motion Boo'), findsOneWidget);
     expect(find.text('Camera Boo'), findsOneWidget);

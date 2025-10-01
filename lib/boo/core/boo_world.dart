@@ -13,10 +13,10 @@ class ColorPair {
 
 class _BackgroundController {
   _BackgroundController(ColorPair initial)
-      : _currentStart = initial.start,
-        _currentEnd = initial.end,
-        _fromStart = initial.start,
-        _fromEnd = initial.end;
+    : _currentStart = initial.start,
+      _currentEnd = initial.end,
+      _fromStart = initial.start,
+      _fromEnd = initial.end;
 
   static const double _transitionSeconds = 1.5;
 
@@ -52,8 +52,10 @@ class _BackgroundController {
     _progress = 0;
   }
 
-  Color get currentStart => Color.lerp(_fromStart, _targetStart ?? _currentStart, _progress)!;
-  Color get currentEnd => Color.lerp(_fromEnd, _targetEnd ?? _currentEnd, _progress)!;
+  Color get currentStart =>
+      Color.lerp(_fromStart, _targetStart ?? _currentStart, _progress)!;
+  Color get currentEnd =>
+      Color.lerp(_fromEnd, _targetEnd ?? _currentEnd, _progress)!;
 }
 
 class BooWorld {
@@ -112,7 +114,9 @@ class BooWorld {
       )..reorient();
       _creatures.add(creature);
     }
-    _background = _BackgroundController(_backgroundPalette[_currentBackgroundIndex]);
+    _background = _BackgroundController(
+      _backgroundPalette[_currentBackgroundIndex],
+    );
     _faceVisible = false;
     _initialized = true;
     _scheduleReturn(DateTime.now().millisecondsSinceEpoch);
@@ -126,10 +130,13 @@ class BooWorld {
     _system!.update();
     final int? previous = _previousUpdateTime;
     _previousUpdateTime = timeMillis;
-    final double deltaSeconds = previous == null ? 0 : (timeMillis - previous) / 1000.0;
+    final double deltaSeconds = previous == null
+        ? 0
+        : (timeMillis - previous) / 1000.0;
     _background.update(deltaSeconds);
 
-    if (_pendingBackgroundChangeAt != null && timeMillis >= _pendingBackgroundChangeAt!) {
+    if (_pendingBackgroundChangeAt != null &&
+        timeMillis >= _pendingBackgroundChangeAt!) {
       _advanceBackground();
       _pendingBackgroundChangeAt = null;
     }
@@ -192,24 +199,22 @@ class BooWorld {
           cumulativeDelay += BooMath.randomInt(3000, 8000);
         }
       }
-      final Creature creature = _creatures[i]
-        ..reorient();
+      final Creature creature = _creatures[i]..reorient();
       creature.comeBack(cumulativeDelay, timeMillis);
     }
   }
 
   void _advanceBackground() {
-    _currentBackgroundIndex = (_currentBackgroundIndex + 1) % _backgroundPalette.length;
+    _currentBackgroundIndex =
+        (_currentBackgroundIndex + 1) % _backgroundPalette.length;
     _background.changeTo(_backgroundPalette[_currentBackgroundIndex]);
   }
 
   List<Creature> get creatures => _creatures;
-  ColorPair get backgroundColors => ColorPair(_background.currentStart, _background.currentEnd);
+  ColorPair get backgroundColors =>
+      ColorPair(_background.currentStart, _background.currentEnd);
 
   void setTilt(Offset tilt) {
-    _tilt = Offset(
-      tilt.dx.clamp(-1.0, 1.0),
-      tilt.dy.clamp(-1.0, 1.0),
-    );
+    _tilt = Offset(tilt.dx.clamp(-1.0, 1.0), tilt.dy.clamp(-1.0, 1.0));
   }
 }

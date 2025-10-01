@@ -4,11 +4,11 @@ import 'package:vector_math/vector_math_64.dart' as vm;
 
 class PhysicsSystem {
   PhysicsSystem(double width, List<double> sizes)
-      : _scale = width / referenceWidth,
-        _bodies = List<_Body>.generate(
-          sizes.length,
-          (index) => _Body(sizes[index]),
-        ) {
+    : _scale = width / referenceWidth,
+      _bodies = List<_Body>.generate(
+        sizes.length,
+        (index) => _Body(sizes[index]),
+      ) {
     for (final _Body body in _bodies) {
       final double angle = _random.nextDouble() * math.pi * 2;
       body.size /= _scale;
@@ -132,7 +132,8 @@ class PhysicsSystem {
           1.0,
           math.sqrt(dx * dx + dy * dy) - body.size - other.size,
         );
-        final double repulsion = _repulsionStrength * _repulsionFactor / distance;
+        final double repulsion =
+            _repulsionStrength * _repulsionFactor / distance;
         final double distanceSum = math.max(1.0, dx.abs() + dy.abs());
         body.force
           ..x += (dx * repulsion) / distanceSum
@@ -140,8 +141,10 @@ class PhysicsSystem {
       }
       final double targetX = body.springPos.x + body.springOffset.x;
       final double targetY = body.springPos.y + body.springOffset.y;
-      final double springForceX = -_springStrength * body.mass * (body.pos.x - targetX);
-      final double springForceY = -_springStrength * body.mass * (body.pos.y - targetY);
+      final double springForceX =
+          -_springStrength * body.mass * (body.pos.x - targetX);
+      final double springForceY =
+          -_springStrength * body.mass * (body.pos.y - targetY);
       final double dampingForceX = -_damping * body.vel.x;
       final double dampingForceY = -_damping * body.vel.y;
       body.vel
@@ -160,14 +163,14 @@ class PhysicsSystem {
 
 class _Body {
   _Body(double initialSize)
-      : pos = vm.Vector2.zero(),
-        vel = vm.Vector2.zero(),
-        force = vm.Vector2.zero(),
-        springPos = vm.Vector2.zero(),
-        springOffset = vm.Vector2.zero(),
-        lastForce = vm.Vector2.zero(),
-        size = initialSize,
-        originalSize = initialSize;
+    : pos = vm.Vector2.zero(),
+      vel = vm.Vector2.zero(),
+      force = vm.Vector2.zero(),
+      springPos = vm.Vector2.zero(),
+      springOffset = vm.Vector2.zero(),
+      lastForce = vm.Vector2.zero(),
+      size = initialSize,
+      originalSize = initialSize;
 
   final vm.Vector2 pos;
   final vm.Vector2 vel;

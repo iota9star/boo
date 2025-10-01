@@ -27,14 +27,17 @@ class CreatureInteraction {
   }
 
   bool isNewArrival(int timeMillis) {
-    if (_newCreature != null && timeMillis - _arrivalTime > _newArrivalDuration) {
+    if (_newCreature != null &&
+        timeMillis - _arrivalTime > _newArrivalDuration) {
       _newCreature = null;
     }
     return _newCreature != null;
   }
 
   Creature getLookTarget(Creature creature) {
-    if (_newCreature != null && _newCreature != creature && BooMath.flip(_newArrivalLookChance)) {
+    if (_newCreature != null &&
+        _newCreature != creature &&
+        BooMath.flip(_newArrivalLookChance)) {
       return _newCreature!;
     }
     Creature target;

@@ -5,10 +5,10 @@ import 'math_utils.dart';
 
 class Bubble {
   Bubble()
-      : _rotationPeriods = List<int>.generate(
-          8,
-          (_) => BooMath.randomInt(_minPeriod, _maxPeriod),
-        );
+    : _rotationPeriods = List<int>.generate(
+        8,
+        (_) => BooMath.randomInt(_minPeriod, _maxPeriod),
+      );
 
   static const double _spline8 = 0.2652031;
   static const double _sqrtHalf = 0.7071067811865476; // sqrt(0.5)
@@ -62,12 +62,14 @@ class Bubble {
     _path.reset();
     for (int i = 0; i < 8; i++) {
       final int j = (i + 1) % 8;
-      final double iTheta = BooMath.cycle(millis, _rotationPeriods[i].toDouble()) * BooMath.twoPi;
-      final double jTheta = BooMath.cycle(millis, _rotationPeriods[j].toDouble()) * BooMath.twoPi;
-  final double iX = math.cos(iTheta) * size * _wobbleAmount;
-  final double iY = math.sin(iTheta) * size * _wobbleAmount;
-  final double jX = math.cos(jTheta) * size * _wobbleAmount;
-  final double jY = math.sin(jTheta) * size * _wobbleAmount;
+      final double iTheta =
+          BooMath.cycle(millis, _rotationPeriods[i].toDouble()) * BooMath.twoPi;
+      final double jTheta =
+          BooMath.cycle(millis, _rotationPeriods[j].toDouble()) * BooMath.twoPi;
+      final double iX = math.cos(iTheta) * size * _wobbleAmount;
+      final double iY = math.sin(iTheta) * size * _wobbleAmount;
+      final double jX = math.cos(jTheta) * size * _wobbleAmount;
+      final double jY = math.sin(jTheta) * size * _wobbleAmount;
       final double startX = _circle8X[i] * size + iX;
       final double startY = _circle8Y[i] * size + iY;
       final double endX = _circle8X[j] * size + jX;
@@ -87,19 +89,19 @@ class Bubble {
 
   static List<double> _calculateAx() {
     return List<double>.generate(8, (int i) {
-  return _circle8X[i] - math.cos(_circle8Theta[i]) * _spline8;
+      return _circle8X[i] - math.cos(_circle8Theta[i]) * _spline8;
     });
   }
 
   static List<double> _calculateAy() {
     return List<double>.generate(8, (int i) {
-  return _circle8Y[i] - math.sin(_circle8Theta[i]) * _spline8;
+      return _circle8Y[i] - math.sin(_circle8Theta[i]) * _spline8;
     });
   }
 
   static List<double> _calculateBx() {
     return List<double>.generate(8, (int i) {
-  return _circle8X[i] + math.cos(_circle8Theta[i]) * _spline8;
+      return _circle8X[i] + math.cos(_circle8Theta[i]) * _spline8;
     });
   }
 

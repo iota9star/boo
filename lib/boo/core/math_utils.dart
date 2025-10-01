@@ -19,8 +19,14 @@ class BooMath {
     return value;
   }
 
-  static double map(double value, double inMin, double inMax, double outMin, double outMax,
-      [Curve? curve]) {
+  static double map(
+    double value,
+    double inMin,
+    double inMax,
+    double outMin,
+    double outMax, [
+    Curve? curve,
+  ]) {
     final double span = inMax - inMin;
     if (span == 0) {
       return outMin;
@@ -32,8 +38,14 @@ class BooMath {
     return outMin + (outMax - outMin) * t;
   }
 
-  static double clampedMap(double value, double inMin, double inMax, double outMin, double outMax,
-      [Curve? curve]) {
+  static double clampedMap(
+    double value,
+    double inMin,
+    double inMax,
+    double outMin,
+    double outMax, [
+    Curve? curve,
+  ]) {
     if (value <= inMin) {
       return outMin;
     }
@@ -43,10 +55,22 @@ class BooMath {
     return map(value, inMin, inMax, outMin, outMax, curve);
   }
 
-  static int clampedMapInt(double value, double inMin, double inMax, int outMin, int outMax,
-      [Curve? curve]) {
-    return clampedMap(value, inMin, inMax, outMin.toDouble(), outMax.toDouble(), curve)
-        .round();
+  static int clampedMapInt(
+    double value,
+    double inMin,
+    double inMax,
+    int outMin,
+    int outMax, [
+    Curve? curve,
+  ]) {
+    return clampedMap(
+      value,
+      inMin,
+      inMax,
+      outMin.toDouble(),
+      outMax.toDouble(),
+      curve,
+    ).round();
   }
 
   static double cycle(int millis, double periodMillis) {
@@ -54,7 +78,11 @@ class BooMath {
     return map(v, 0, periodMillis, 0, 1);
   }
 
-  static double oscillate(int millis, double periodMillis, [double phaseShift = 0]) {
+  static double oscillate(
+    int millis,
+    double periodMillis, [
+    double phaseShift = 0,
+  ]) {
     return math.sin(((millis / periodMillis) + phaseShift) * twoPi);
   }
 

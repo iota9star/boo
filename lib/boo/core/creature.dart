@@ -20,7 +20,13 @@ enum CreatureMode {
   anticipating,
   leaving;
 
-  bool get hiding => this == CreatureMode.out || this == CreatureMode.returning || this == CreatureMode.noticing || this == CreatureMode.scared || this == CreatureMode.anticipating || this == CreatureMode.leaving;
+  bool get hiding =>
+      this == CreatureMode.out ||
+      this == CreatureMode.returning ||
+      this == CreatureMode.noticing ||
+      this == CreatureMode.scared ||
+      this == CreatureMode.anticipating ||
+      this == CreatureMode.leaving;
 }
 
 class _GrowthBehavior {
@@ -66,15 +72,15 @@ class Creature {
     required this.index,
     required this.creatureInteraction,
     required double initialBodySize,
-  })  : originalBodySize = initialBodySize,
-        bodySize = initialBodySize,
-        eyeSize = initialBodySize * _eyeScale,
-        bubble = Bubble(),
-        paint = Paint()
-          ..isAntiAlias = true
-          ..filterQuality = FilterQuality.high,
-        eyes = Eyes(),
-        _startTime = DateTime.now().millisecondsSinceEpoch;
+  }) : originalBodySize = initialBodySize,
+       bodySize = initialBodySize,
+       eyeSize = initialBodySize * _eyeScale,
+       bubble = Bubble(),
+       paint = Paint()
+         ..isAntiAlias = true
+         ..filterQuality = FilterQuality.high,
+       eyes = Eyes(),
+       _startTime = DateTime.now().millisecondsSinceEpoch;
 
   static const double _eyeScale = 0.13;
   static const double _growChance = 0.0002;
@@ -136,13 +142,18 @@ class Creature {
         _mode = CreatureMode.leaving;
       }
     } else if (_mode == CreatureMode.leaving) {
-      final double escapeX = PhysicsSystem.referenceWidth * 2 * math.cos(_escapeAngle);
-      final double escapeY = PhysicsSystem.referenceWidth * 2 * math.sin(_escapeAngle);
+      final double escapeX =
+          PhysicsSystem.referenceWidth * 2 * math.cos(_escapeAngle);
+      final double escapeY =
+          PhysicsSystem.referenceWidth * 2 * math.sin(_escapeAngle);
       system.setRepulsionStrength(1);
       system.setSpringStrength(2);
       system.moveTo(index, escapeX, escapeY);
       _mode = CreatureMode.out;
-    } else if (_mode == CreatureMode.settled && _growth == null && withEffects && BooMath.flip(_growChance)) {
+    } else if (_mode == CreatureMode.settled &&
+        _growth == null &&
+        withEffects &&
+        BooMath.flip(_growChance)) {
       _growth = _GrowthBehavior(localTime, BooMath.random(2.0, 3.0));
       creatureInteraction.notice(this, timeMillis);
     }
@@ -160,7 +171,10 @@ class Creature {
 
   void render(Canvas canvas, Size canvasSize) {
     canvas.save();
-    canvas.translate(canvasSize.width / 2 + _position.x, canvasSize.height / 2 + _position.y);
+    canvas.translate(
+      canvasSize.width / 2 + _position.x,
+      canvasSize.height / 2 + _position.y,
+    );
     _drawSelf(canvas);
     canvas.restore();
   }
@@ -180,8 +194,10 @@ class Creature {
 
   void reorient([double? angle]) {
     _escapeAngle = angle ?? BooMath.random(0, BooMath.twoPi);
-    final double escapeX = PhysicsSystem.referenceWidth * 2 * math.cos(_escapeAngle);
-    final double escapeY = PhysicsSystem.referenceWidth * 2 * math.sin(_escapeAngle);
+    final double escapeX =
+        PhysicsSystem.referenceWidth * 2 * math.cos(_escapeAngle);
+    final double escapeY =
+        PhysicsSystem.referenceWidth * 2 * math.sin(_escapeAngle);
     system.forceTo(index, escapeX, escapeY);
   }
 
@@ -209,7 +225,10 @@ class Creature {
   }
 
   double angleTo(Creature other) {
-    return math.atan2(other._position.y - _position.y, other._position.x - _position.x);
+    return math.atan2(
+      other._position.y - _position.y,
+      other._position.x - _position.x,
+    );
   }
 
   void lookIfAble(int timeMillis, Creature other) {
@@ -236,7 +255,14 @@ class Eyes {
 
   Creature? _lookTarget;
 
-  void draw(Canvas canvas, Paint paint, double bodySize, double eyeSize, int timeMillis, Creature creature) {
+  void draw(
+    Canvas canvas,
+    Paint paint,
+    double bodySize,
+    double eyeSize,
+    int timeMillis,
+    Creature creature,
+  ) {
     double cx = 0;
     double cy = 0;
     double eyeScale = 1;
@@ -248,11 +274,16 @@ class Eyes {
         _look = null;
       } else {
         final double progress = _look!.progress(timeMillis);
-        final double theta = _lookTarget == null ? _look!.param : creature.angleTo(_lookTarget!);
+        final double theta = _lookTarget == null
+            ? _look!.param
+            : creature.angleTo(_lookTarget!);
         cx = (bodySize / 3) * math.cos(theta) * progress;
         cy = (bodySize / 2) * math.sin(theta) * progress;
       }
-    } else if (_notice == null && _freakOut == null && _stare == null && _BehaviorTypeEx.look.shouldStart()) {
+    } else if (_notice == null &&
+        _freakOut == null &&
+        _stare == null &&
+        _BehaviorTypeEx.look.shouldStart()) {
       _startLooking(timeMillis, null, creature);
     }
 
@@ -280,7 +311,9 @@ class Eyes {
       } else {
         blinkAmount = _blink!.progress(timeMillis);
       }
-    } else if (_notice == null && _freakOut == null && _BehaviorTypeEx.blink.shouldStart()) {
+    } else if (_notice == null &&
+        _freakOut == null &&
+        _BehaviorTypeEx.blink.shouldStart()) {
       _blink = _BehaviorState(timeMillis, _BehaviorTypeEx.blink, 0);
     }
 
@@ -290,15 +323,25 @@ class Eyes {
       } else {
         squintLevel = _squint!.progress(timeMillis);
       }
-    } else if (_notice == null && _freakOut == null && _blink == null && _BehaviorTypeEx.squint.shouldStart()) {
+    } else if (_notice == null &&
+        _freakOut == null &&
+        _blink == null &&
+        _BehaviorTypeEx.squint.shouldStart()) {
       _squint = _BehaviorState(timeMillis, _BehaviorTypeEx.squint, 0);
     }
 
     if (squintLevel > 0) {
-      blinkAmount = BooMath.map(squintLevel, 0.0, 1.0, blinkAmount, 0.5 + blinkAmount / 2);
+      blinkAmount = BooMath.map(
+        squintLevel,
+        0.0,
+        1.0,
+        blinkAmount,
+        0.5 + blinkAmount / 2,
+      );
     }
 
-    final double verticalScale = (1 - BooMath.clamp(blinkAmount, 0.0, 1.0)).clamp(0.0, 1.0);
+    final double verticalScale = (1 - BooMath.clamp(blinkAmount, 0.0, 1.0))
+        .clamp(0.0, 1.0);
     for (int i = 0; i < 2; i++) {
       final double x = i == 0 ? cx - bodySize / 3 : cx + bodySize / 3;
       final double y = cy;
@@ -312,8 +355,11 @@ class Eyes {
 
   void _startLooking(int timeMillis, Creature? target, Creature creature) {
     double theta;
-    if (creature.creatureInteraction.isNewArrival(timeMillis) || BooMath.flip(0.7) || target != null) {
-      _lookTarget = target ?? creature.creatureInteraction.getLookTarget(creature);
+    if (creature.creatureInteraction.isNewArrival(timeMillis) ||
+        BooMath.flip(0.7) ||
+        target != null) {
+      _lookTarget =
+          target ?? creature.creatureInteraction.getLookTarget(creature);
       theta = creature.angleTo(_lookTarget!);
     } else {
       _lookTarget = null;
@@ -353,7 +399,12 @@ enum _BehaviorTypeEx {
   scared(0, 100, 500, 600),
   stare(0, 20, 800, 2500);
 
-  const _BehaviorTypeEx(this.chance, this.changeTime, this.minDuration, this.maxDuration);
+  const _BehaviorTypeEx(
+    this.chance,
+    this.changeTime,
+    this.minDuration,
+    this.maxDuration,
+  );
 
   final double chance;
   final int changeTime;
@@ -366,7 +417,10 @@ enum _BehaviorTypeEx {
 class _BehaviorState {
   _BehaviorState(this.startTime, this.type, this.param) {
     final int holdDuration = type.changeTime;
-    final int duration = BooMath.random(type.minDuration.toDouble(), type.maxDuration.toDouble()).round();
+    final int duration = BooMath.random(
+      type.minDuration.toDouble(),
+      type.maxDuration.toDouble(),
+    ).round();
     holdTime = startTime + holdDuration;
     stopTime = holdTime + duration;
     endTime = stopTime + holdDuration;
